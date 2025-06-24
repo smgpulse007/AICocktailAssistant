@@ -3,9 +3,9 @@ import pandas as pd
 import numpy as np
 
 def load_data(ingredients_path, recipes_path):
-    with open(ingredients_path) as file:
+    with open(ingredients_path, encoding='utf-8') as file:
         ingredients = json.load(file)
-    with open(recipes_path) as file:
+    with open(recipes_path, encoding='utf-8') as file:
         recipes = json.load(file)
     return ingredients, recipes
 

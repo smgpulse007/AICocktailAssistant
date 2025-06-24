@@ -15,8 +15,11 @@ def calculate_similarity():
 
 def recommend_cocktails(cocktail_name, top_n=5):
     similarity_matrix = calculate_similarity()
-    if cocktail_name not in similarity_matrix.index:
+    lower_index_map = {name.lower(): name for name in similarity_matrix.index}
+    cocktail_name_lower = cocktail_name.lower()
+    if cocktail_name_lower not in lower_index_map:
         return f"No data for cocktail named '{cocktail_name}'."
-    similarities = similarity_matrix[cocktail_name]
+    actual_name = lower_index_map[cocktail_name_lower]
+    similarities = similarity_matrix[actual_name]
     recommended = similarities.sort_values(ascending=False)[1:top_n+1]
     return recommended.index.tolist()
