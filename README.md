@@ -8,11 +8,16 @@ A small Streamlit demo that recommends cocktails with similar ingredient sets. T
 
 ## Run locally
 
-Use Python 3.10 or newer and run these commands from the repository root:
+Use Python 3.10 or newer. For a fresh checkout:
 
 ```bash
 git clone https://github.com/smgpulse007/AICocktailAssistant.git
 cd AICocktailAssistant
+```
+
+From the repository root, create an environment and start the app:
+
+```bash
 python -m venv .venv
 # Activate with: source .venv/bin/activate (macOS/Linux)
 # Or: .venv\Scripts\Activate.ps1 (PowerShell)
