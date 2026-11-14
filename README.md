@@ -2,19 +2,25 @@
 
 A small Streamlit demo that recommends cocktails with similar ingredient sets. The current engine uses binary ingredient features and cosine similarity; it does not use an LLM or learn from user feedback.
 
+![Actual app walkthrough: Negroni recommendations and a case-sensitive unknown-name response](docs/cocktail-demo.gif)
+
+[Open the existing Streamlit app](https://aicocktailassistant.streamlit.app/) or run locally below. The GIF was captured from the running local app; [recording details](docs/record-demo.md) include versions and source hashes. Tied recommendations may appear in a different order across dependency versions.
+
 ## Run locally
 
 Use Python 3.10 or newer and run these commands from the repository root:
 
 ```bash
+git clone https://github.com/smgpulse007/AICocktailAssistant.git
+cd AICocktailAssistant
 python -m venv .venv
 # Activate with: source .venv/bin/activate (macOS/Linux)
 # Or: .venv\Scripts\Activate.ps1 (PowerShell)
 python -m pip install -r requirements.txt
-python -m streamlit run app.py
+python -X utf8 -m streamlit run app.py --server.address 127.0.0.1 --browser.gatherUsageStats false
 ```
 
-Enter an exact cocktail name from `recipes.json`, such as `Negroni`. Although the current UI mentions ingredients, the engine accepts cocktail names only and matching is case-sensitive. An unknown name returns a "No data" message.
+Open **http://127.0.0.1:8501** and enter an exact cocktail name from `recipes.json`, such as `Negroni`, then press Enter. The engine accepts cocktail names only and matching is case-sensitive. An unknown name returns a "No data" message. UTF-8 mode makes the checked-in recipe text load consistently on Windows; usage-statistics collection is disabled by the command above.
 
 ## How recommendations work
 
@@ -40,7 +46,7 @@ Running `python data_preparation.py` writes an optional `cocktail_features.csv`.
 ## Smoke check
 
 ```bash
-python -c "from recommendation_engine import recommend_cocktails; print(recommend_cocktails('Negroni'))"
+python -X utf8 -c "from recommendation_engine import recommend_cocktails; print(recommend_cocktails('Negroni'))"
 ```
 
 No recommendation-quality benchmark is included. This is a content-similarity example, not evidence of personalization or nutritional suitability.

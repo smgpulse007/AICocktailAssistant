@@ -1,0 +1,40 @@
+{
+  "recorded_utc": "2026-11-14T04:26:31.458655+00:00",
+  "method": "Actual local Streamlit app screenshots; Playwright CLI with isolated Microsoft Edge",
+  "viewport": [
+    1280,
+    820
+  ],
+  "inputs": [
+    "Negroni",
+    "negroni",
+    "Negroni"
+  ],
+  "frame_durations_ms": [
+    2000,
+    4500,
+    2500,
+    3500
+  ],
+  "source_sha256": {
+    "app.py": "773888aa62ff609450f0824fd259682c31f41b613c5d2ac21e1f46cb33fc7a8d",
+    "recommendation_engine.py": "bf218fe4ae7b65d1d853bcace6a777157ede0d7a07ee0bb5eaeaa5ee8a5e191a",
+    "data_preparation.py": "db07b4c5968cb07cb45c416045dae1b8e660afb065700596a2a3f2cf435bb98b",
+    "ingredients.json": "ce658e92266a688e6f65d52e7cc2e80237a5064c39dfcc9a79c89e4a7214fbca",
+    "recipes.json": "8e6f59cbd1eb4e93f8a3a9c0f7715a2c3d3949b91e85cecdadb56a32f69096b2"
+  },
+  "frame_sha256": {
+    "gif-01.png": "3ee645583236a59599b3d443208f7740b14ee9f6fe9b18e6787886f6424056f4",
+    "gif-02.png": "3b55558ede59bfe71e8cf23477774483b545addac9b19add51a7ddd4678bc33f",
+    "gif-03.png": "7f78f48c1394cc53846ad0f0f2ae34ceb250eeb07a9add9f3faca39192d133c8",
+    "gif-04.png": "3b55558ede59bfe71e8cf23477774483b545addac9b19add51a7ddd4678bc33f"
+  },
+  "gif_sha256": "3bffe9320defd1498f7066922c6fcefa8fdb99449dc2a87584f3e44b270b89ed",
+  "python": "3.11.8",
+  "packages": {
+    "streamlit": "1.67.0",
+    "numpy": "2.4.6",
+    "pandas": "3.1.1",
+    "scikit-learn": "1.9.1"
+  }
+}
