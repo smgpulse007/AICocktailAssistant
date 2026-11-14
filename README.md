@@ -1,95 +1,58 @@
-
 # AI Cocktail Assistant
 
-The AI Cocktail Assistant is a Streamlit-based web application designed to recommend cocktail recipes based on user preferences. It leverages artificial intelligence (AI) techniques to analyze cocktail recipes and suggest those matching the flavors or ingredients users are interested in.
+A small Streamlit demo that recommends cocktails with similar ingredient sets. The current engine uses binary ingredient features and cosine similarity; it does not use an LLM or learn from user feedback.
 
-## Features
+## Run locally
 
-- **Cocktail Recommendations**: Users can enter their preferred ingredients or cocktail names to get personalized cocktail suggestions.
-- **User-friendly Interface**: The application features an easy-to-navigate interface, making it simple for users to find what they're looking for.
-
-## AI-Driven Recommendation Engine
-
-The core of the AI Cocktail Assistant is its recommendation engine, which utilizes content-based filtering techniques to provide personalized cocktail suggestions. Here's how it works:
-
-- **Data Preparation**: The engine starts by processing a comprehensive dataset of cocktail recipes, including ingredients and flavor profiles.
-
-- **Feature Extraction**: For each cocktail, it extracts features based on the ingredients, their proportions, and associated flavor notes. This step involves natural language processing (NLP) techniques to analyze and encode the recipe text into numerical vectors.
-
-- **Similarity Calculation**: When a user enters a preference, the engine calculates the similarity between the user's input and the feature vectors of all cocktails in the dataset. This calculation uses cosine similarity, a metric for measuring the angle between two vectors in a multi-dimensional space.
-
-- **Cocktail Recommendations**: Based on the similarity scores, the engine ranks the cocktails and suggests the ones most closely matching the user's preferences.
-
-
-## Future Enhancements
-
-The AI Cocktail Assistant is a project with potential for further development and enhancement. Here are some areas we're looking to improve in the future:
-
-- **Enhanced NLP Analysis**: Dive deeper into natural language processing to improve how we extract and utilize flavor profiles from recipe descriptions, potentially improving the accuracy and relevance of our recommendations.
-
-- **User Feedback Loop**: Implement a feedback mechanism that allows users to rate the recommended cocktails, providing valuable data that can be used to refine and improve the recommendation engine over time.
-
-- **Personalization**: Develop user profiles to track preferences and history, enabling more personalized and accurate recommendations over time.
-
-- **Expanding the Dataset**: Continuously update and expand the dataset with new recipes, ingredients, and flavor profiles to cover a wider range of tastes and preferences.
-
-- **Generative Recipes**: Explore the possibility of integrating a generative model to create new cocktail recipes based on user preferences and available ingredients.
-
-- **Mobile App Development**: Extend the project to a mobile platform, making the AI Cocktail Assistant accessible as an app for iOS and Android users.
-
-- **Integration with Social Media**: Allow users to share their favorite cocktails or created recipes on social media platforms directly from the app.
-
-We welcome contributions from the community to help bring these enhancements to life. If you're interested in contributing, please check out our contribution guidelines or reach out to us directly.
-
-
-
-
-
-
-
-### Installation
-
-Before you begin, ensure you have the following installed:
-- Python 3.8 or later
-- pip (Python package manager)
-
-### Installation
-
-1. Clone the repository to your local machine:
+Use Python 3.10 or newer and run these commands from the repository root:
 
 ```bash
-git clone https://github.com/yourusername/AICocktailAssistant.git
-cd AICocktailAssistant
+python -m venv .venv
+# Activate with: source .venv/bin/activate (macOS/Linux)
+# Or: .venv\Scripts\Activate.ps1 (PowerShell)
+python -m pip install -r requirements.txt
+python -m streamlit run app.py
 ```
 
-2. Install the required Python packages:
+Enter an exact cocktail name from `recipes.json`, such as `Negroni`. Although the current UI mentions ingredients, the engine accepts cocktail names only and matching is case-sensitive. An unknown name returns a "No data" message.
+
+## How recommendations work
+
+1. `data_preparation.py` loads the checked-in ingredient and recipe JSON files.
+2. Each recipe becomes a binary vector: 1 for an ingredient present in the vocabulary, 0 otherwise.
+3. `recommendation_engine.py` computes cosine similarity between those vectors.
+4. The selected cocktail's similarity scores are sorted and up to five names are returned to the UI.
+
+Ingredient quantities, flavor descriptions, preparation instructions, and personal taste are not used in the similarity calculation. Tied scores do not have a dedicated tie-breaking policy; the current implementation skips the first sorted result rather than explicitly removing the selected name.
+
+## Files
+
+| File | Purpose |
+| --- | --- |
+| `app.py` | Streamlit input and recommendation list |
+| `data_preparation.py` | JSON loading and binary feature preparation |
+| `recommendation_engine.py` | Cosine-similarity lookup |
+| `ingredients.json`, `recipes.json` | Checked-in demo data |
+| `requirements.txt` | Python dependencies |
+
+Running `python data_preparation.py` writes an optional `cocktail_features.csv`. The app builds its features directly from JSON and does not read that CSV.
+
+## Smoke check
 
 ```bash
-pip install -r requirements.txt
+python -c "from recommendation_engine import recommend_cocktails; print(recommend_cocktails('Negroni'))"
 ```
 
-### Running the Application
+No recommendation-quality benchmark is included. This is a content-similarity example, not evidence of personalization or nutritional suitability.
 
-To run the AI Cocktail Assistant, execute the following command from the root directory of the project:
+## Known limitations and contributions
 
-```bash
-streamlit run app.py
-```
+- JSON files currently use the operating system's default text encoding; UTF-8 data may need UTF-8 mode on some Windows setups.
+- Ingredient-only queries and case-insensitive lookup are not implemented in current main.
+- A useful follow-up would explicitly exclude the query cocktail, test ties and unknown names, and evaluate recommendations on a documented dataset.
+- Please preserve attribution and coordinate with existing pull requests before changing shared code.
 
-This will start the Streamlit server, and you should be able to access the application by navigating to `http://localhost:8501` in your web browser.
+## License status
 
-## Usage
-
-- Upon launching the AI Cocktail Assistant, you'll be greeted with a text input box.
-- Enter an ingredient (e.g., "Gin") or a cocktail name (e.g., "Negroni") you're interested in.
-- The application will display a list of recommended cocktails based on your input.
-- If no recommendations are found, try entering a different ingredient or cocktail name.
-
-## Contributing
-
-Contributions to the AI Cocktail Assistant are welcome! Please feel free to fork the repository, make your changes, and submit a pull request.
-
-## License
-
-This project is licensed under the MIT License
+There is no `LICENSE` file in the current repository. This README does not grant an MIT license; the owner needs to establish the intended code and data licensing before reuse or redistribution.
 
